@@ -32,3 +32,5 @@ def send_mail(send_from,send_to,subject,text,files,server,port,username='',passw
     smtp.login(username,password)
     smtp.sendmail(send_from, send_to, msg.as_string())
     smtp.quit()
+    
+send_mail('markaltaweel@gmail.com','maltaweel@yahoo.com','This is it','This is the text')
