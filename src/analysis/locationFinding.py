@@ -60,7 +60,7 @@ def printResults(keepRows):
     fileOutput=os.path.join(pn,'output',"scotlandFinds.csv")
     
     #opens the output file and then puts the output in
-    with open(fileOutput, 'wb') as csvf:
+    with open(fileOutput, 'wt') as csvf:
         writer = csv.DictWriter(csvf, fieldnames=fieldnames)
 
         writer.writeheader()      
