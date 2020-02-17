@@ -39,7 +39,10 @@ def findLocation():
                  
                 location=row['Location']
                 state=getState(location)
-                if state=="Scotland":
+                if state is None:
+                    continue
+                
+                if "Scotland" in state:
                     keepRows.append(row)
             
             
@@ -51,7 +54,7 @@ def findLocation():
             
 def printResults(keepRows):
     
-    fieldnames = ['Object','Price','Location','Seller','Image']
+    fieldnames = ['Object','Price','Location','Seller','Image','Link']
 
     pn=os.path.abspath(__file__)
     pn=pn.split("src")[0]
@@ -66,12 +69,15 @@ def printResults(keepRows):
         writer.writeheader()      
     
         for i in keepRows:
+            
             obj=i['Object']
             prc=i['Price']
             loc=i['Location']
             sel=i['Seller']
             img=i['Image']
-            writer.writerow({'Object': str(obj),'Price':str(prc),'Location':str(loc),'Seller':str(sel),'Image':str(img)})
+            lnk=i['Link']
+            
+            writer.writerow({'Object': str(obj),'Price':str(prc),'Location':str(loc),'Seller':str(sel),'Image':str(img),'Link':str(lnk)})
             
             
 '''

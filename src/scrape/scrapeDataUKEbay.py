@@ -161,7 +161,7 @@ def prinItem(descP,priceP,locP,linkP,sellerP,image):
         p=priceP
         l=str(locP.encode('utf-8').strip())
         l=l.replace("b\'","").replace("\'",'').strip()
-        o=linkP.encode('utf-8').strip()
+        o=linkP.replace("b\'","").replace("\'",'').strip()
         ss=str(sellerP.encode('utf-8').strip())
         ss=ss.replace("b\'","").replace("\'",'').strip()
         img=str(image).replace('b\'','').replace("\'",'')
