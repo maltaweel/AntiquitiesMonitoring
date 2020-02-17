@@ -155,7 +155,7 @@ def ebay_scrape(urlFull):
 
             
 def prinItem(descP,priceP,locP,linkP,sellerP,image):
-        priceP=priceP.split("\\xa")[1].replace('\'','')
+        priceP=priceP.split("\\xa3")[1].replace('\'','')
         d=descP.split("|")[0].strip()
         d=d.replace("b\'",'')
         p=priceP
