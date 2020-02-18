@@ -47,4 +47,14 @@ def send_mail(send_from,send_to,subject,text,server,port,username='',password=''
     smtp.sendmail(send_from, send_to, msg.as_string())
     smtp.quit()
     
-send_mail('antiquitiies.scotland@gmail.com','maltaweel@yahoo.com','This is it','This is the text','smtp.gmail.com',587,'antiquitiies.scotland','prath4a$')
+    '''
+Method to run the module and launch the analysis
+'''                    
+def run():
+    
+    send_mail('antiquitiies.scotland@gmail.com','maltaweel@yahoo.com','This is it','This is the text','smtp.gmail.com',587,'antiquitiies.scotland','prath4a$')
+    print("Finished")
+   
+if __name__ == '__main__':
+    run()
+    
