@@ -8,7 +8,7 @@ import geocoder
 import os
 
 import csv
-
+import analysis.sendEmail as sendEmail
 
 def getState(location):
 
@@ -53,7 +53,7 @@ def findLocation():
         print ("Could not read file:", csvfile)
             
 def printResults(keepRows):
-    
+    sendEmail=False
     fieldnames = ['Object','Price','Location','Seller','Image','Link']
 
     pn=os.path.abspath(__file__)
@@ -78,7 +78,9 @@ def printResults(keepRows):
             lnk=i['Link']
             
             writer.writerow({'Object': str(obj),'Price':str(prc),'Location':str(loc),'Seller':str(sel),'Image':str(img),'Link':str(lnk)})
+            sendEmail=True
             
+    return sendEmail
             
 '''
 Method to run the module and launch the analysis
@@ -88,7 +90,11 @@ def run():
     #first load any data we need and find location
     keepRows=findLocation()
     
-    printResults(keepRows)
+    
+    runEmail=printResults(keepRows)
+    
+    if runEmail==True:
+        sendEmail.run()
 
     print("Finished")
    
