@@ -8,6 +8,8 @@ from bs4 import BeautifulSoup
 import os
 import csv
 import requests
+import datetime
+import math
 
 
 url='https://www.ebay.co.uk/sch/Antiquities/37903/i.html?_udlo=&_udhi=&_ftrt=901&_ftrv=1&_sabdlo=&_sabdhi=&_samilow=&_samihi=&_sadis=15&_stpos=SL11AE&_sop=12&_dmd=1&_nkw=antiquities&_pgn='
@@ -24,24 +26,25 @@ def make_urls():
     # List of urls created
     urls = []
 
+    run=True
     for i in range(1,10000000):
+        if run==False:
+            break
         # Adds the name of item being searched to the end of the eBay url and appends it to the urls list
         # In order for it to work the spaces need to be replaced with a +
         urlFull=url + str(i)+prt2
-        run=ebay_scrape(urlFull)
+        run=ebay_scrape(urlFull,i)
         
         
         
 
     # Returns the list of completed urls
 
-def ebay_scrape(urlFull):
+def ebay_scrape(urlFull,nm):
     
     # Downloads the eBay page for processing
     originalUrl=urlFull
-           
-    nn=1
-    
+            
     run=True
     
     while(run):
@@ -61,9 +64,19 @@ def ebay_scrape(urlFull):
         soup = BeautifulSoup(res.text, 'html.parser')
             
         num=soup.find_all('h3',{"class":'lvtitle'})
+        nnt=soup.find_all("span", {"class":'rcnt'})
+        
+        for n in nnt:
+            v=n.contents
+            for ii in v:
+                nv=float(ii.replace(",",""))
+                totalRun=math.ceil(nv/50.0)
+                if totalRun<nm:
+                    run=False
+                    
         
         if len(num)==0:
-            run=False
+            break
             
         sites=[]
         for n in num:
@@ -85,6 +98,8 @@ def ebay_scrape(urlFull):
             loc=soupS.find_all("span",{'itemprop':'availableAtOrFrom'})
             seller=soupS.find_all("span",{'class':'mbg-nw'})
             objImg=soupS.find_all("meta",{'name':'twitter:image'})
+            nnt=soup.find_all("span", {"class":'rcnt'})
+           
             
             descp=''
             prce=''
@@ -191,7 +206,7 @@ locs={}
 sell={}
 
 if __name__ == '__main__':
-    fieldnames = ['Object','Price','Location','Seller','Image','Link']
+    fieldnames = ['Object','Date','Price','Location','Seller','Image','Link']
     
     
     filename=os.path.join(filenameToOutput(),'output','scrapedOutput.csv')
