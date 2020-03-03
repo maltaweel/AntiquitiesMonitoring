@@ -7,12 +7,18 @@ from bs4 import BeautifulSoup
 import os
 import csv
 import requests
+from urllib.request import urlopen
 import datetime
 import math
 from selenium import webdriver
 from scrape.scrapeDataUKEbay import price
 
-url1='https://www.gumtree.com/search?featured_filter=false&urgent_filter=false&sort=date&search_scope=false&photos_filter=false&search_category=all&q='
+baseUrl = 'https://www.gumtree.com/'
+search_arg = 'search?'
+USER_AGENT = "Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.0)"
+REQUEST_HEADERS = {'User-agent': USER_AGENT,}
+        
+url1='http://www.gumtree.com/search?featured_filter=false&urgent_filter=false&sort=date&search_scope=false&photos_filter=false&search_category=all&q='
 url2='&tq=&search_location='
 
 part1=['antiques']
@@ -41,19 +47,19 @@ def make_urls():
     urls = []
     
     for p in part1:
-        url=url1+p
+        url=url1+str(p)
                 
         for pp in part2:
-            url=url+url2+pp
-            
+            url=url+url2+str(pp)
+              
             run=True
             for i in range(1,10000000):
                 if run==False:
                     break
-                run=gumtree_scrape(url)
+                run=gumtree_scrape(url,p,pp)
         
         
-def gumtree_scrape(urlFull):
+def gumtree_scrape(urlFull,p,pp):
     
     '''
     <h2 class="listing-title">
@@ -72,19 +78,20 @@ def gumtree_scrape(urlFull):
     while(run):
 
         print(originalUrl)
-        res = requests.get(originalUrl)
+    #    request = requests.get("http://www.gumtree.com/search?q=%s&search_location=%s&category=%s" % ("", p, pp),headers=REQUEST_HEADERS)
+        request=requests.get(originalUrl)
         
-        
+        ''''
         # Raises an exception error if there's an error downloading the website
         try:
             res.raise_for_status()
-        except Exception e:
-            print e
+        except requests.exceptions.RequestException as e:
+            print(e)
             run=False
-            
+        '''    
            
         # Creates a BeautifulSoup object for HTML parsing
-        soup = BeautifulSoup(res.text, 'html.parser')
+        soup = BeautifulSoup(request.text, 'html5lib')
             
         num=soup.find_all('h2',{"class":'listing-title'})
         nnt=soup.find_all("a", {"class":'listing-link'})

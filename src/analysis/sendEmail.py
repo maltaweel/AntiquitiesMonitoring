@@ -52,7 +52,7 @@ Method to run the module and launch the analysis
 '''                    
 def run():
     
-    send_mail('antiquitiies.scotland@gmail.com','maltaweel@yahoo.com','This is it','This is the text','smtp.gmail.com',587,'antiquitiies.scotland','prath4a$')
+    send_mail('antiquitiies.scotland@gmail.com','treasuretrove@nms.ac.uk','This is it','This is the text','smtp.gmail.com',587,'antiquitiies.scotland','prath4a$')
     print("Finished")
    
 if __name__ == '__main__':

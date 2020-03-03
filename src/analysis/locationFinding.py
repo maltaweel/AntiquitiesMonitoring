@@ -37,7 +37,7 @@ def findLocation():
             
             for row in reader:
                  
-                location=row['Location']
+                location=row['Location'].split(",")[0]
                 state=getState(location)
                 if state is None:
                     continue
