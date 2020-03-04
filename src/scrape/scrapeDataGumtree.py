@@ -16,7 +16,9 @@ import time
 
 baseUrl = 'https://www.gumtree.com/'
 search_arg = 'search?'
-headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36'}
+header = {'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) '
+                    'AppleWebKit/537.36 (KHTML, like Gecko) '
+                    'Chrome/51.0.2704.103 Safari/537.36'}
 
         
 url1='http://www.gumtree.com/search?featured_filter=false&urgent_filter=false&sort=date&search_scope=false&photos_filter=false&search_category=all&q='
@@ -81,7 +83,7 @@ def gumtree_scrape(urlFull,p,pp):
         print(originalUrl)
         time.sleep(2)
     #    request = requests.get("http://www.gumtree.com/search?q=%s&search_location=%s&category=%s" % ("", p, pp),headers=REQUEST_HEADERS)
-        request=requests.get(originalUrl,headers=headers)
+        request=requests.get(originalUrl,headers=header)
         time.sleep(2)
         ''''
         # Raises an exception error if there's an error downloading the website
