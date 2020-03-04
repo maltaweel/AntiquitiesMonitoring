@@ -102,8 +102,12 @@ def gumtree_scrape(urlFull,p,pp):
         ntt=soup.find_all("div", {"class":'listing-thumbnail'})
         
         for n in nnt:
+            href=n['href']
+            if href=="":
+                continue
             
-            resS = requests.get(n)
+            href="https://www.gumtree.com"+href
+            resS = requests.get(href,headers=header)
 #            print(s)
             soupS = BeautifulSoup(resS.text, 'html.parser')
             title=soupS.find_all("title")
@@ -112,7 +116,7 @@ def gumtree_scrape(urlFull,p,pp):
             prce=''
             ttle=''
             for t in title:
-               ttle=t
+                ttle=t
             
             for p in price:
                 prce=p
