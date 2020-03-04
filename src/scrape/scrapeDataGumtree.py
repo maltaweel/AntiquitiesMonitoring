@@ -12,17 +12,18 @@ import datetime
 import math
 from selenium import webdriver
 from scrape.scrapeDataUKEbay import price
+import time
 
 baseUrl = 'https://www.gumtree.com/'
 search_arg = 'search?'
-USER_AGENT = "Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.0)"
-REQUEST_HEADERS = {'User-agent': USER_AGENT,}
+headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36'}
+
         
 url1='http://www.gumtree.com/search?featured_filter=false&urgent_filter=false&sort=date&search_scope=false&photos_filter=false&search_category=all&q='
 url2='&tq=&search_location='
 
 part1=['antiques']
-part2=['Scotland&tl=']
+part2=['Scotland']
 
 prices={}
 links={}
@@ -78,9 +79,10 @@ def gumtree_scrape(urlFull,p,pp):
     while(run):
 
         print(originalUrl)
+        time.sleep(2)
     #    request = requests.get("http://www.gumtree.com/search?q=%s&search_location=%s&category=%s" % ("", p, pp),headers=REQUEST_HEADERS)
-        request=requests.get(originalUrl)
-        
+        request=requests.get(originalUrl,headers=headers)
+        time.sleep(2)
         ''''
         # Raises an exception error if there's an error downloading the website
         try:

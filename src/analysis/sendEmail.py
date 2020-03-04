@@ -35,7 +35,7 @@ def send_mail(send_from,send_to,subject,text,server,port,username='',password=''
     part = MIMEBase('application', "octet-stream")
     part.set_payload(open(filename, "rb").read())
     encoders.encode_base64(part)
-    part.add_header('Content-Disposition', 'attachment; filename="scrapedOutput.csv"')
+    part.add_header('Content-Disposition', 'attachment; filename="scotlandFinds.csv"')
     msg.attach(part)
 
     #context = ssl.SSLContext(ssl.PROTOCOL_SSLv3)
@@ -52,7 +52,7 @@ Method to run the module and launch the analysis
 '''                    
 def run():
     
-    send_mail('antiquitiies.scotland@gmail.com','treasuretrove@nms.ac.uk','This is it','This is the text','smtp.gmail.com',587,'antiquitiies.scotland','prath4a$')
+    send_mail('antiquitiies.scotland@gmail.com','treasuretrove@nms.ac.uk','List of Scotish Antiquities/Heritage Items','This is a list with sales of antiquities or heritage items from Scotland.','smtp.gmail.com',587,'antiquitiies.scotland','prath4a$')
     print("Finished")
    
 if __name__ == '__main__':
