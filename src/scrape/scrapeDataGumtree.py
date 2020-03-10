@@ -7,12 +7,18 @@ from bs4 import BeautifulSoup
 import os
 import csv
 import requests
+import urllib.request
 from urllib.request import urlopen
 import datetime
 import math
-from selenium import webdriver
 from scrape.scrapeDataUKEbay import price
 import time
+
+from selenium.webdriver import Chrome
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 baseUrl = 'https://www.gumtree.com/'
 search_arg = 'search?'
@@ -33,6 +39,11 @@ images={}
 locations={}
 users={}
 
+webdriver = os.path.join(os.path.abspath(__file__).split('src')[0],'chromedriver')
+
+#driver = Chrome(webdriver)
+
+#wait = WebDriverWait(driver, 10)
             
 '''
 The file output path for printing results (to the src level of this project)
@@ -78,25 +89,23 @@ def gumtree_scrape(urlFull,p,pp):
             
     run=True
     
+    '''      
+        for item in wait.until(EC.presence_of_all_elements_located((By.CSS_SELECTOR, "listing-title"))):
+            company_name = item.find_element_by_id("company-name-1").text
+            ceo_name = item.find_element_by_id("ceo-name-1").text
+            print(company_name,ceo_name)
+
+        driver.quit()
+    '''       
+    
     while(run):
 
         print(originalUrl)
         time.sleep(2)
-    #    request = requests.get("http://www.gumtree.com/search?q=%s&search_location=%s&category=%s" % ("", p, pp),headers=REQUEST_HEADERS)
-        request=requests.get(originalUrl,headers=header)
+        r=requests.get(originalUrl,headers=header)
         time.sleep(2)
-        ''''
-        # Raises an exception error if there's an error downloading the website
-        try:
-            res.raise_for_status()
-        except requests.exceptions.RequestException as e:
-            print(e)
-            run=False
-        '''    
-           
-        # Creates a BeautifulSoup object for HTML parsing
-        soup = BeautifulSoup(request.text, 'html5lib')
-            
+   
+        soup=BeautifulSoup(r.text, 'html.parser') 
         num=soup.find_all('h2',{"class":'listing-title'})
         nnt=soup.find_all("a", {"class":'listing-link'})
         ntt=soup.find_all("div", {"class":'listing-thumbnail'})
@@ -107,8 +116,9 @@ def gumtree_scrape(urlFull,p,pp):
                 continue
             
             href="https://www.gumtree.com"+href
+            time.sleep(2)
             resS = requests.get(href,headers=header)
-#            print(s)
+            time.sleep(2)
             soupS = BeautifulSoup(resS.text, 'html.parser')
             title=soupS.find_all("title")
             price=soupS.find_all("strong",{'class':"ad-price txt-xlarge txt-emphasis inline-block"})

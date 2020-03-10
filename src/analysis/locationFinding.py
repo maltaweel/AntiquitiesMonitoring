@@ -94,7 +94,7 @@ def printResults(row,writer):
 Method to run the module and launch the analysis
 '''                    
 def run():
-    sendEmail=False
+    
     fieldnames = ['Object','Price','Location','Seller','Image','Link']
 
     pn=os.path.abspath(__file__)
