@@ -170,6 +170,8 @@ def ebay_scrape(urlFull,nm):
 
             
 def prinItem(descP,priceP,locP,linkP,sellerP,image):
+    
+    try:
         priceP=priceP.split("\\xa3")[1].replace('\'','')
         d=descP.split("|")[0].strip()
         d=d.replace("b\'",'')
@@ -184,6 +186,9 @@ def prinItem(descP,priceP,locP,linkP,sellerP,image):
                 
         writer.writerow({'Object':str(d),'Price':str(p),'Location':str(l),'Seller':str(ss),'Image':str(img),
                          'Link':str(o)})
+        
+    except:
+        return
             
 '''
 The file output path for printing results (to the src level of this project)
