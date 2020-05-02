@@ -10,6 +10,7 @@ import csv
 import requests
 import datetime
 import math
+from builtins import False
 
 '''
 url='https://www.ebay.co.uk/sch/Antiquities/37903/i.html?_udlo=&_udhi=&_ftrt=901&_ftrv=1&_sabdlo=&_sabdhi=&_samilow=&_samihi=&_sadis=15&_stpos=SL11AE&_sop=12&_dmd=1&_nkw=antiquities&_pgn='
@@ -34,10 +35,9 @@ def make_urls():
     urls = []
 
     run=True
-    for i in range(1,10000000):
+    i=1
+    while(run):
         
-        if run==False:
-            break
         # Adds the name of item being searched to the end of the eBay url and appends it to the urls list
         # In order for it to work the spaces need to be replaced with a +
         urlFull=''
@@ -47,8 +47,10 @@ def make_urls():
             urlFull=url + str(i)+prt2+str((50*(i-1)))+prt3
         run=ebay_scrape(urlFull,i)
         
+        if run==False:
+            break
         
-        
+        i+=1
 
     # Returns the list of completed urls
 
@@ -78,6 +80,14 @@ def ebay_scrape(urlFull,nm):
         num=soup.find_all('h3',{"class":'lvtitle'})
         nnt=soup.find_all("span", {"class":'rcnt'})
         
+        if len(nnt)==0:
+            run=False
+            break
+        
+        if len(num)==0:
+            run=False
+            break
+           
         for n in nnt:
             v=n.contents
             for ii in v:
@@ -85,10 +95,6 @@ def ebay_scrape(urlFull,nm):
                 totalRun=math.ceil(nv/50.0)
                 if totalRun<nm:
                     run=False
-                    
-        
-        if len(num)==0:
-            break
             
         sites=[]
         for n in num:
