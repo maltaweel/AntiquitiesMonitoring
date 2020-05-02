@@ -18,7 +18,7 @@ prt2='&_skc=50&rt=nc'
 
 '''
 original='https://www.ebay.co.uk/sch/Antiquities/37903/i.html?_udlo=&_udhi=&_ftrt=901&_ftrv=1&_sabdlo=&_sabdhi=&_samilow=&_samihi=&_sadis=15&_stpos=SL11AE&_sop=12&_dmd=1&_fosrp=1&_nkw=antiquities'
-url='https://www.ebay.co.uk/sch/Antiquities/37903/i.html?_udlo=&_udhi=&_ftrt=901&_ftrv=1&_sabdlo=&_sabdhi=&_samilow=&_samihi=&_sadis=15&_stpos=SL11AE&_sop=12&_dmd=1&_fosrp=1&_nkw=antiquities&_pgn=5'
+url='https://www.ebay.co.uk/sch/Antiquities/37903/i.html?_udlo=&_udhi=&_ftrt=901&_ftrv=1&_sabdlo=&_sabdhi=&_samilow=&_samihi=&_sadis=15&_stpos=SL11AE&_sop=12&_dmd=1&_fosrp=1&_nkw=antiquities&_pgn='
 prt2='&_skc='
 prt3='&rt=nc'
 name_list = ["British",'Chinese', 'Roman','Americas','Other Antiquities','Egyptian','Prehistoric',
@@ -44,7 +44,7 @@ def make_urls():
         if i==1:
             urlFull=original
         else:
-            urlFull=url + str(i)+prt2+(50*(i-1))+prt3
+            urlFull=url + str(i)+prt2+str((50*(i-1)))+prt3
         run=ebay_scrape(urlFull,i)
         
         
@@ -58,7 +58,7 @@ def ebay_scrape(urlFull,nm):
     originalUrl=urlFull
             
     run=True
-    
+  
     while(run):
 
         print(originalUrl)
@@ -177,7 +177,7 @@ def ebay_scrape(urlFull,nm):
             if run is True:
                 prinItem(descp,prce,location,s,sellR,obImg)
                     
-            
+        break   
     return run
 
             
