@@ -32,10 +32,11 @@ def make_urls():
 #    url='https://www.ebay.com/sch/37907/i.html?_sop=13&_sadis=15&LH_Auction=1&LH_Complete=1&LH_Sold=1&_stpos=90278-4805&_from=R40&_nkw=%27'
     
     # List of urls created
-    urls = []
+#    urls = []
 
     run=True
     i=1
+    
     while(run):
         
         # Adds the name of item being searched to the end of the eBay url and appends it to the urls list
