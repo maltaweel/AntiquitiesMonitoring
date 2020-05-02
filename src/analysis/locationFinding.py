@@ -113,8 +113,8 @@ def run():
         runEmail=findLocation(writer)
     
     
-        if runEmail==True:
-            sendEmail.run()
+    #   if runEmail==True:
+    #       sendEmail.run()
 
         print("Finished")
    
