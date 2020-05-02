@@ -38,7 +38,7 @@ def filenameToOutput():
         
         return pn
 
-def findLocation(writer):
+def findLocation(writer,csvf):
     sendEmail=False
     filename=os.path.join(filenameToOutput(),'output','scrapedOutput.csv')
     keepRows=[]
@@ -65,6 +65,7 @@ def findLocation(writer):
                         done.append(obj+":"+prc)
                     printResults(row,writer)
                     sendEmail=True
+                    csvf.flush()
             
                 i+=1
             return keepRows     
@@ -110,9 +111,9 @@ def run():
         writer.writeheader()  
         
         #first load any data we need and find location
-        runEmail=findLocation(writer)
+        runEmail=findLocation(writer,csvf)
     
-    
+        csvf.flush()
     #   if runEmail==True:
     #       sendEmail.run()
 
